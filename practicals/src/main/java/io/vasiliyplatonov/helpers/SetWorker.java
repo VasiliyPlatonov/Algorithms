@@ -1,43 +1,34 @@
-package main.java.io.vasiliyplatonov;
+package main.java.io.vasiliyplatonov.helpers;
 
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import static main.java.io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
+
 
 public class SetWorker {
+    public static final char[] NAMES_OF_SETS = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+
     /**
      * Метод заполнения множеств
      */
-    public  Map<Character, String> getFilledSetsByNames(char[] nameOfSets) {
+    public Map<Character, String> getFilledSets(int size) {
+
+        if (size > NAMES_OF_SETS.length) {
+            throw new IllegalArgumentException("Максимальное количество множеств 10, было принято : " + size);
+        }
+
         Map<Character, String> sets = new HashMap<>();
         Scanner in = new Scanner(System.in);
 
-        for (int i = 0; i < nameOfSets.length; i++) {
-
-            System.out.println("Введите множество " + nameOfSets[i] + ": ");
-            sets.put(nameOfSets[i], in.next());
+        for (int i = 0; i < size; i++) {
+            System.out.println("Введите множество " + NAMES_OF_SETS[i] + ": ");
+            sets.put(NAMES_OF_SETS[i], in.next());
         }
 
         return sets;
-    }
-
-    /**
-     * Метод вычисляющий множество E = (A & B) / (C & D)
-     */
-    public String calculateE(Map<Character, String> sets) {
-
-        //(A & B)
-        String AB = intersection(sets.get('A'), sets.get('B'));
-
-        //(C & D)
-        String CD = intersection(sets.get('C'), sets.get('D'));
-
-        //(A & B) / (C & D)
-        String E = difference(AB, CD);
-
-
-        return E;
     }
 
     /**
@@ -45,7 +36,7 @@ public class SetWorker {
      */
     public String intersection(String A, String B) {
         // изменяемая, но не потокобезопасная строка
-        StringBuilder result = new StringBuilder(0);
+        StringBuilder result = new StringBuilder();
         boolean containsLetter;
 
         // проверить каждый элемент множества A, есть ли он в множестве B
@@ -104,5 +95,45 @@ public class SetWorker {
 
         }
         return result.toString();
+    }
+
+
+    public char[] convertToSetOfLowRusLatter(BitSet bitSet) {
+        // изменяемая, но не потокобезопасная строка
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < bitSet.length(); i++) {
+            if (bitSet.get(i))
+                result.append(LOW_RUS_LETTERS[i]);
+        }
+        return result.toString().toCharArray();
+    }
+
+    /**
+     * Конвертация множеств содержищие символы в множества содержащие массивы битов
+     */
+    public Map<Character, BitSet> convertToBits(Map<Character, String> sets) {
+        Map<Character, BitSet> result = new HashMap<>();
+
+        for (Map.Entry<Character, String> entry : sets.entrySet()) {  // пройти по каждому вхождению в мапе чтобы
+            BitSet bitSet = new BitSet(LOW_RUS_LETTERS.length);       // установить в результат имя множества и полученный массив бит
+            fillBitSet(entry.getValue(), bitSet);                     //  { {A : 0100101 ... 001},
+            result.put(entry.getKey(), bitSet);                       //     B : {1001001 ...01}
+        }                                                             //     ... }
+
+        return result;
+    }
+
+    /**
+     * Заполнить массива бит в зависимости от того, есть ли в переданном множестве буква
+     */
+    public static void fillBitSet(String set, BitSet bitSet) {          //  пройти по каждой букве в LOW_RUS_LETTERS (универсум)
+        for (int i = 0; i < LOW_RUS_LETTERS.length; i++) {              //  если буква есть в множестве, то записать в результат 1
+            for (int j = 0; j < set.length(); j++) {                    //  иначе 0
+                if (LOW_RUS_LETTERS[i] == set.charAt(j)) {
+                    bitSet.set(i); // bitSet[i] == 1
+                }
+            }
+        }
     }
 }
