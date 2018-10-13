@@ -6,16 +6,27 @@ import static main.java.io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
 
 
 public class SetWorker {
-    public static final char[] NAMES_OF_SETS = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+    private static final char[] NAMES_OF_SETS = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+
 
     /**
-     * Метод заполнения множеств
+     * Метод заполнения множеств.
+     * Множество представлено как строка.
+     *
+     * @param size количество множеств
+     * @return множества в виде { ключ : значение },
+     * где ключ имеет тип char, значение строка введенных пользователем букв
+     * @throws IllegalArgumentException в случае, если параметр size больше длины NAMES_OF_SETS
+     *                                  или меньше или равен нулю
      */
-    public Map<Character, String> getFilledSets(int size) {
+    public Map<Character, String> getFilledStringSets(int size) {
 
-        if (size > NAMES_OF_SETS.length) {
-            throw new IllegalArgumentException("Максимальное количество множеств 10, было принято : " + size);
-        }
+        if (size > NAMES_OF_SETS.length)
+            throw new IllegalArgumentException("Максимальное количество множеств " + NAMES_OF_SETS.length + ", было принято : " + size);
+
+        if (size <= 0)
+            throw new IllegalArgumentException("Минимальное количество множеств 1, было принято : " + size);
+
 
         Map<Character, String> sets = new HashMap<>();
         Scanner in = new Scanner(System.in);
@@ -27,6 +38,31 @@ public class SetWorker {
 
         return sets;
     }
+
+
+    /**
+     * Метод заполнения множеств.
+     * Множество представлено как массив бит заполненный рандомно
+     *
+     * @see java.util.Random
+     * @see RandomBitSet
+     */
+    public Map<Character, BitSet> getFilledRandomBitSets(int size) {
+
+        if (size > NAMES_OF_SETS.length) {
+            throw new IllegalArgumentException("Максимальное количество множеств " + NAMES_OF_SETS.length + ", было принято : " + size);
+        }
+        if (size <= 0)
+            throw new IllegalArgumentException("Минимальное количество множеств 1, было принято : " + size);
+
+        Map<Character, BitSet> sets = new HashMap<>();
+        for (int i = 0; i < size; i++) {
+            sets.put(NAMES_OF_SETS[i], new RandomBitSet());
+        }
+
+        return sets;
+    }
+
 
     /**
      * Метод вычисляющий пересечение двух множеств
@@ -133,7 +169,6 @@ public class SetWorker {
             }
         }
     }
-
 
 
 }

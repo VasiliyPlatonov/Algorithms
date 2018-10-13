@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         SetWorker setWorker = new SetWorker();
 
-        Map<Character, String> sets = setWorker.getFilledSets(COUNT_OF_SETS);
+        Map<Character, String> sets = setWorker.getFilledStringSets(COUNT_OF_SETS);
 
         // преобразовать множества из символов в массивы битов
         Map<Character, BitSet> setBit = setWorker.convertToBits(sets);

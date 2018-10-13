@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         SetWorker setWorker = new SetWorker();
-        Map<Character, String> sets = setWorker.getFilledSets(COUNT_OF_SETS);
+        Map<Character, String> sets = setWorker.getFilledStringSets(COUNT_OF_SETS);
 
         //(A & B) / (C & D)
         String AB = setWorker.intersection(sets.get('A'), sets.get('B'));
