@@ -1,9 +1,6 @@
 package main.java.io.vasiliyplatonov.helpers;
 
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import static main.java.io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
 
@@ -98,11 +95,11 @@ public class SetWorker {
     }
 
 
-    public char[] convertToSetOfLowRusLatter(BitSet bitSet) {
+    public char[] getSetOfLowRusLatterByBitSet(BitSet bitSet) {
         // изменяемая, но не потокобезопасная строка
         StringBuilder result = new StringBuilder();
 
-        for (int i = 0; i < bitSet.length(); i++) {
+        for (int i = 0; i < LOW_RUS_LETTERS.length; i++) {
             if (bitSet.get(i))
                 result.append(LOW_RUS_LETTERS[i]);
         }
@@ -136,4 +133,7 @@ public class SetWorker {
             }
         }
     }
+
+
+
 }

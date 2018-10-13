@@ -14,7 +14,7 @@ public class Main {
 
         Map<Character, String> sets = setWorker.getFilledSets(COUNT_OF_SETS);
 
-        // преобразование множеств из символов в массивы битов
+        // преобразовать множества из символов в массивы битов
         Map<Character, BitSet> setBit = setWorker.convertToBits(sets);
 
         //  Вычислить (A & B) / (C & D)
@@ -23,7 +23,7 @@ public class Main {
         BitSet CD = setBit.get('C');
         resultSet.andNot(CD);
 
-        System.out.println("Резулитирующее множество: " + Arrays.toString(setWorker.convertToSetOfLowRusLatter(resultSet)));
+        System.out.println("Резулитирующее множество: " + Arrays.toString(setWorker.getSetOfLowRusLatterByBitSet(resultSet)));
 
     }
 }
