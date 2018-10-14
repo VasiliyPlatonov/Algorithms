@@ -2,7 +2,9 @@ package io.vasiliyplatonov.practical_1_3_5;
 
 
 import io.vasiliyplatonov.helpers.RandomBitSet;
+import io.vasiliyplatonov.helpers.RandomStringGenerator;
 import io.vasiliyplatonov.helpers.SetWorker;
+import io.vasiliyplatonov.helpers.Universe;
 
 import java.util.Arrays;
 import java.util.BitSet;
@@ -14,19 +16,32 @@ public class Main {
     private static final int COUNT_OF_SETS = 4;
 
     public static void main(String[] args) {
-//        practical_1_2_1();
+        System.out.println("\n------------------------------  practical 1.1.1  ------------------------------\n");
+        practical_1_1_1();
 
-
-//        checkEqualsSet(100_000_000);
+        System.out.println("\n------------------------------  practical 1.2.1  ------------------------------\n");
+        practical_1_2_1();
 
     }
 
     private static void practical_1_1_1() {
+        Map<Character, String> strSets = SetWorker.getFilledRandomStringSets(COUNT_OF_SETS, 20);
 
+
+        //(A & B) / (C & D)
+        String AB = SetWorker.intersection(strSets.get('A'), strSets.get('B'));
+        String CD = SetWorker.intersection(strSets.get('C'), strSets.get('D'));
+        String setE = SetWorker.difference(AB, CD);
+
+        for (Map.Entry<Character, String> entry : strSets.entrySet()) {
+            System.out.print(entry.getKey() + ":   ");
+            System.out.println(entry.getValue());
+        }
+        System.out.print("Res: ");
+        System.out.println(setE);
     }
 
     private static void practical_1_2_1() {
-        //        // для  practical 1_2_1
         Map<Character, BitSet> bitSets = SetWorker.getFilledRandomBitSets(COUNT_OF_SETS);
 //
 //          Вычислить (A & B) / (C & D)
