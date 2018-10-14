@@ -1,8 +1,11 @@
-package main.java.io.vasiliyplatonov.helpers;
+package io.vasiliyplatonov.helpers;
 
-import java.util.*;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-import static main.java.io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
+import static io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
 
 
 public class SetWorker {

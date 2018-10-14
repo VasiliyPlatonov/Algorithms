@@ -1,6 +1,7 @@
-package main.java.io.vasiliyplatonov.practical_1_1_1;
+package io.vasiliyplatonov.practical_1_1_1;
 
-import main.java.io.vasiliyplatonov.helpers.SetWorker;
+
+import io.vasiliyplatonov.helpers.SetWorker;
 
 import java.util.Map;
 

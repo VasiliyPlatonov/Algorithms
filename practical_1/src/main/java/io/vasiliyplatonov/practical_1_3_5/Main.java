@@ -1,13 +1,14 @@
-package main.java.io.vasiliyplatonov.practical_1_3_5;
+package io.vasiliyplatonov.practical_1_3_5;
 
-import main.java.io.vasiliyplatonov.helpers.RandomBitSet;
-import main.java.io.vasiliyplatonov.helpers.SetWorker;
+
+import io.vasiliyplatonov.helpers.RandomBitSet;
+import io.vasiliyplatonov.helpers.SetWorker;
 
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Map;
 
-import static main.java.io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
+import static io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
 
 public class Main {
     private static final int COUNT_OF_SETS = 4;

@@ -1,4 +1,4 @@
-package main.java.io.vasiliyplatonov.helpers;
+package io.vasiliyplatonov.helpers;
 
 public class Universe {
 

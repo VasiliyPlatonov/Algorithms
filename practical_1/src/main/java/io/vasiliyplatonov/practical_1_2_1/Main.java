@@ -1,6 +1,7 @@
-package main.java.io.vasiliyplatonov.practical_1_2_1;
+package io.vasiliyplatonov.practical_1_2_1;
 
-import main.java.io.vasiliyplatonov.helpers.SetWorker;
+
+import io.vasiliyplatonov.helpers.SetWorker;
 
 import java.util.Arrays;
 import java.util.BitSet;
