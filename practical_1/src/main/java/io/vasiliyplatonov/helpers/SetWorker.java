@@ -22,7 +22,7 @@ public class SetWorker {
      * @throws IllegalArgumentException в случае, если параметр size больше длины NAMES_OF_SETS
      *                                  или меньше или равен нулю
      */
-    public Map<Character, String> getFilledStringSets(int size) {
+    public static Map<Character, String> getFilledStringSets(int size) {
 
         if (size > NAMES_OF_SETS.length)
             throw new IllegalArgumentException("Максимальное количество множеств " + NAMES_OF_SETS.length + ", было принято : " + size);
@@ -50,7 +50,7 @@ public class SetWorker {
      * @see java.util.Random
      * @see RandomBitSet
      */
-    public Map<Character, BitSet> getFilledRandomBitSets(int size) {
+    public static Map<Character, BitSet> getFilledRandomBitSets(int size) {
 
         if (size > NAMES_OF_SETS.length) {
             throw new IllegalArgumentException("Максимальное количество множеств " + NAMES_OF_SETS.length + ", было принято : " + size);
@@ -70,7 +70,7 @@ public class SetWorker {
     /**
      * Метод вычисляющий пересечение двух множеств
      */
-    public String intersection(String A, String B) {
+    public static String intersection(String A, String B) {
         // изменяемая, но не потокобезопасная строка
         StringBuilder result = new StringBuilder();
         boolean containsLetter;
@@ -107,7 +107,7 @@ public class SetWorker {
     /**
      * Метод вычисляющий разность двух множеств
      */
-    public String difference(String A, String B) {
+    public static String difference(String A, String B) {
 
         // изменяемая, но не потокобезопасная строка
         StringBuilder result = new StringBuilder(0);
@@ -134,7 +134,7 @@ public class SetWorker {
     }
 
 
-    public char[] getSetOfLowRusLatterByBitSet(BitSet bitSet) {
+    public static char[] getSetOfLowRusLatterByBitSet(BitSet bitSet) {
         // изменяемая, но не потокобезопасная строка
         StringBuilder result = new StringBuilder();
 
@@ -148,7 +148,7 @@ public class SetWorker {
     /**
      * Конвертация множеств содержищие символы в множества содержащие массивы битов
      */
-    public Map<Character, BitSet> convertToBits(Map<Character, String> sets) {
+    public static Map<Character, BitSet> convertToBits(Map<Character, String> sets) {
         Map<Character, BitSet> result = new HashMap<>();
 
         for (Map.Entry<Character, String> entry : sets.entrySet()) {  // пройти по каждому вхождению в мапе чтобы

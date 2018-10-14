@@ -11,12 +11,11 @@ public class Main {
     private static final int COUNT_OF_SETS = 4;
 
     public static void main(String[] args) {
-        SetWorker setWorker = new SetWorker();
 
-        Map<Character, String> sets = setWorker.getFilledStringSets(COUNT_OF_SETS);
+        Map<Character, String> sets = SetWorker.getFilledStringSets(COUNT_OF_SETS);
 
         // преобразовать множества из символов в массивы битов
-        Map<Character, BitSet> setBit = setWorker.convertToBits(sets);
+        Map<Character, BitSet> setBit = SetWorker.convertToBits(sets);
 
         //  Вычислить (A & B) / (C & D)
         BitSet resultSet = setBit.get('A');
@@ -24,7 +23,7 @@ public class Main {
         BitSet CD = setBit.get('C');
         resultSet.andNot(CD);
 
-        System.out.println("Резулитирующее множество: " + Arrays.toString(setWorker.getSetOfLowRusLatterByBitSet(resultSet)));
+        System.out.println("Резулитирующее множество: " + Arrays.toString(SetWorker.getSetOfLowRusLatterByBitSet(resultSet)));
 
     }
 }

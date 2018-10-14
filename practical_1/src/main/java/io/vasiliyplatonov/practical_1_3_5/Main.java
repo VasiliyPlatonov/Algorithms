@@ -14,11 +14,20 @@ public class Main {
     private static final int COUNT_OF_SETS = 4;
 
     public static void main(String[] args) {
+//        practical_1_2_1();
 
-        SetWorker setWorker = new SetWorker();
 
-//        // для  practical 1_2_1
-        Map<Character, BitSet> bitSets = setWorker.getFilledRandomBitSets(COUNT_OF_SETS);
+//        checkEqualsSet(100_000_000);
+
+    }
+
+    private static void practical_1_1_1() {
+
+    }
+
+    private static void practical_1_2_1() {
+        //        // для  practical 1_2_1
+        Map<Character, BitSet> bitSets = SetWorker.getFilledRandomBitSets(COUNT_OF_SETS);
 //
 //          Вычислить (A & B) / (C & D)
         BitSet resultSet = bitSets.get('A');
@@ -38,14 +47,11 @@ public class Main {
         System.out.println("Универсум: " + Arrays.toString(LOW_RUS_LETTERS));
         for (Map.Entry<Character, BitSet> entry : bitSets.entrySet()) {
             System.out.print(entry.getKey() + ":   ");
-            System.out.println(Arrays.toString(setWorker.getSetOfLowRusLatterByBitSet(entry.getValue())));
+            System.out.println(Arrays.toString(SetWorker.getSetOfLowRusLatterByBitSet(entry.getValue())));
         }
 //        (A & B) / (C & D)
         System.out.print("Res: ");
-        System.out.println(Arrays.toString(setWorker.getSetOfLowRusLatterByBitSet(resultSet)));
-
-//        checkEqualsSet(100_000_000);
-
+        System.out.println(Arrays.toString(SetWorker.getSetOfLowRusLatterByBitSet(resultSet)));
     }
 
 
