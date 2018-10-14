@@ -8,6 +8,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>practical_1</module>
+        <module>practical_2</module>
     </modules>
     <!-- packaging>jar</packaging -->
 
