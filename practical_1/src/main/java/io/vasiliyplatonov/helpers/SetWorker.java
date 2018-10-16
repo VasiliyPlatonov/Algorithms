@@ -16,25 +16,25 @@ public class SetWorker {
      * Метод заполнения множеств.
      * Множество представлено как строка.
      *
-     * @param size количество множеств
+     * @param nSets количество множеств
      * @return множества в виде { ключ : значение },
      * где ключ имеет тип char, значение строка введенных пользователем букв
-     * @throws IllegalArgumentException в случае, если параметр size больше длины NAMES_OF_SETS
+     * @throws IllegalArgumentException в случае, если параметр nSets больше длины NAMES_OF_SETS
      *                                  или меньше или равен нулю
      */
-    public Map<Character, String> getFilledStringSets(int size) {
+    public static Map<Character, String> getFilledStringSets(int nSets) {
 
-        if (size > NAMES_OF_SETS.length)
-            throw new IllegalArgumentException("Максимальное количество множеств " + NAMES_OF_SETS.length + ", было принято : " + size);
+        if (nSets > NAMES_OF_SETS.length)
+            throw new IllegalArgumentException("Максимальное количество множеств " + NAMES_OF_SETS.length + ", было принято : " + nSets);
 
-        if (size <= 0)
-            throw new IllegalArgumentException("Минимальное количество множеств 1, было принято : " + size);
+        if (nSets <= 0)
+            throw new IllegalArgumentException("Минимальное количество множеств 1, было принято : " + nSets);
 
 
         Map<Character, String> sets = new HashMap<>();
         Scanner in = new Scanner(System.in);
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < nSets; i++) {
             System.out.println("Введите множество " + NAMES_OF_SETS[i] + ": ");
             sets.put(NAMES_OF_SETS[i], in.next());
         }
@@ -50,17 +50,39 @@ public class SetWorker {
      * @see java.util.Random
      * @see RandomBitSet
      */
-    public Map<Character, BitSet> getFilledRandomBitSets(int size) {
+    public static Map<Character, BitSet> getFilledRandomBitSets(int nSets) {
 
-        if (size > NAMES_OF_SETS.length) {
-            throw new IllegalArgumentException("Максимальное количество множеств " + NAMES_OF_SETS.length + ", было принято : " + size);
+        if (nSets > NAMES_OF_SETS.length) {
+            throw new IllegalArgumentException("Максимальное количество множеств " + NAMES_OF_SETS.length + ", было принято : " + nSets);
         }
-        if (size <= 0)
-            throw new IllegalArgumentException("Минимальное количество множеств 1, было принято : " + size);
+        if (nSets <= 0)
+            throw new IllegalArgumentException("Минимальное количество множеств 1, было принято : " + nSets);
 
         Map<Character, BitSet> sets = new HashMap<>();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < nSets; i++) {
             sets.put(NAMES_OF_SETS[i], new RandomBitSet());
+        }
+
+        return sets;
+    }
+
+    /**
+     * Метод заполнения множеств.
+     * Множество представлено как строка заполненная рандомно
+     *
+     * @see RandomStringGenerator
+     */
+    public static Map<Character, String> getFilledRandomStringSets(int nSets ,int strLength) {
+
+        if (nSets > NAMES_OF_SETS.length) {
+            throw new IllegalArgumentException("Максимальное количество множеств " + NAMES_OF_SETS.length + ", было принято : " + nSets);
+        }
+        if (nSets <= 0)
+            throw new IllegalArgumentException("Минимальное количество множеств 1, было принято : " + nSets);
+
+        Map<Character, String> sets = new HashMap<>();
+        for (int i = 0; i < nSets; i++) {
+            sets.put(NAMES_OF_SETS[i], RandomStringGenerator.getNext(strLength, LOW_RUS_LETTERS));
         }
 
         return sets;
@@ -70,7 +92,7 @@ public class SetWorker {
     /**
      * Метод вычисляющий пересечение двух множеств
      */
-    public String intersection(String A, String B) {
+    public static String intersection(String A, String B) {
         // изменяемая, но не потокобезопасная строка
         StringBuilder result = new StringBuilder();
         boolean containsLetter;
@@ -107,7 +129,7 @@ public class SetWorker {
     /**
      * Метод вычисляющий разность двух множеств
      */
-    public String difference(String A, String B) {
+    public static String difference(String A, String B) {
 
         // изменяемая, но не потокобезопасная строка
         StringBuilder result = new StringBuilder(0);
@@ -134,7 +156,7 @@ public class SetWorker {
     }
 
 
-    public char[] getSetOfLowRusLatterByBitSet(BitSet bitSet) {
+    public static char[] getSetOfLowRusLatterByBitSet(BitSet bitSet) {
         // изменяемая, но не потокобезопасная строка
         StringBuilder result = new StringBuilder();
 
@@ -148,7 +170,7 @@ public class SetWorker {
     /**
      * Конвертация множеств содержищие символы в множества содержащие массивы битов
      */
-    public Map<Character, BitSet> convertToBits(Map<Character, String> sets) {
+    public static Map<Character, BitSet> convertToBits(Map<Character, String> sets) {
         Map<Character, BitSet> result = new HashMap<>();
 
         for (Map.Entry<Character, String> entry : sets.entrySet()) {  // пройти по каждому вхождению в мапе чтобы
