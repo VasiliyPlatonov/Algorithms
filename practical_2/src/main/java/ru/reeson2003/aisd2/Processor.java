@@ -1,40 +1,71 @@
 package ru.reeson2003.aisd2;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.reeson2003.aisd2.set.ArraySet;
 import ru.reeson2003.aisd2.set.LinkedListSet;
 import ru.reeson2003.aisd2.set.MySet;
 import ru.reeson2003.aisd2.set.UniversumMappedSet;
 
+import java.io.IOException;
+import java.util.List;
+
 public class Processor {
 
-    public static void main(String[] args) {
+    public static final int SIZE = 100;
+    private static final Logger logger = LoggerFactory.getLogger(Processor.class);
+
+    /**
+     * @param args pass filename as argument to run with file data, or empty to run with random data
+     * @throws IOException
+     */
+    public static void main(String[] args) throws IOException {
         Processor processor = new Processor();
-        char[] a = MySet.randomArray();
-        char[] b = MySet.randomArray();
-        char[] c = MySet.randomArray();
-        char[] d = MySet.randomArray();
-        long arraySetTime = processor.run(ArraySet.class, a, b, c, d);
-        long linkedSetTime = processor.run(LinkedListSet.class, a, b, c, d);
-        long universumSetTime = processor.run(UniversumMappedSet.class, a, b, c, d);
-        System.out.println("arraySetTime = " + arraySetTime);
-        System.out.println("linkedSetTime = " + linkedSetTime);
-        System.out.println("universumSetTime = " + universumSetTime);
+        List<FourSet> fourSets = getFourSet(args);
+        /*initial run fir jit compilation. doesn't measure*/
+        runForList(processor, fourSets, ArraySet.class);
+        runForList(processor, fourSets, LinkedListSet.class);
+        runForList(processor, fourSets, UniversumMappedSet.class);
+        /**/
+        logger.debug("Array set:");
+        long arraySetTime = runForList(processor, fourSets, ArraySet.class);
+        logger.debug("linked set:");
+        long linkedSetTime = runForList(processor, fourSets, LinkedListSet.class);
+        logger.debug("Universum set:");
+        long universumSetTime = runForList(processor, fourSets, UniversumMappedSet.class);
+        logger.info("arraySetTime = " + arraySetTime);
+        logger.info("linkedSetTime = " + linkedSetTime);
+        logger.info("universumSetTime = " + universumSetTime);
     }
 
+    @SuppressWarnings("unchecked")
+    private static Long runForList(Processor processor, List<FourSet> fourSets, Class<? extends MySet> tClass) {
+        return fourSets.stream()
+                .mapToLong(f -> processor.run(tClass, f.a, f.b, f.c, f.d))
+                .sum() / (long) fourSets.size();
+    }
+
+    private static List<FourSet> getFourSet(String[] args) throws IOException {
+        if (args.length == 0)
+            return DataSupply.getRandomFourSetList(SIZE);
+        else {
+            String filename = args[0];
+            return FourSet.fromFile(filename);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
     public <T extends MySet<T>> long run(Class<T> tClass, char[] aArray, char[] bArray, char[] cArray, char[] dArray) {
         MySet a = create(tClass, aArray);
-        System.out.println("Set A: " + a);
         MySet b = create(tClass, bArray);
-        System.out.println("Set B: " + b);
         MySet c = create(tClass, cArray);
-        System.out.println("Set C: " + c);
         MySet d = create(tClass, dArray);
-        System.out.println("Set D: " + d);
         long before = System.nanoTime();
         MySet result = calculate(a, b, c, d);
         long after = System.nanoTime();
-        System.out.println("Result set: " + result);
-        return after - before;
+        long elapsed = after - before;
+        logger.debug("{}, {}, {} ,{}, result: {}, time: {}", a, b, c, d, result, elapsed);
+        return elapsed;
     }
 
     public <T extends MySet<T>> T calculate(T a, T b, T c, T d) {
