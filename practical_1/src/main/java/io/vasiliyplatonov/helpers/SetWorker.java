@@ -1,9 +1,9 @@
 package io.vasiliyplatonov.helpers;
 
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import javax.xml.stream.events.Characters;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
 
@@ -34,12 +34,38 @@ public class SetWorker {
         Map<Character, String> sets = new HashMap<>();
         Scanner in = new Scanner(System.in);
 
+        System.out.println("Все вводимые множества должны быть включены в универсум: " + Arrays.toString(LOW_RUS_LETTERS));
+
         for (int i = 0; i < nSets; i++) {
             System.out.println("Введите множество " + NAMES_OF_SETS[i] + ": ");
-            sets.put(NAMES_OF_SETS[i], in.next());
+            String set = in.nextLine();
+
+            if (!isSetIncludedInUniverse(LOW_RUS_LETTERS, set)) {
+                set = getNormalizeSet(LOW_RUS_LETTERS, set);
+                System.out.println("Множество " + NAMES_OF_SETS[i] + " было нормализовано: " + set);
+                System.out.println();
+            }
+
+            sets.put(NAMES_OF_SETS[i], set);
         }
 
         return sets;
+    }
+
+    public static String getNormalizeSet(char[] universe, String set) {
+        StringBuilder sb = new StringBuilder();
+        String u = new String(universe);
+
+        set.chars()
+                .filter(s -> u.contains((String.valueOf((char) s))))
+                .forEach(s -> sb.append((char) s));
+
+        return sb.toString();
+    }
+
+    public static boolean isSetIncludedInUniverse(char[] universe, String set) {
+        String u = new String(universe);
+        return set.chars().allMatch(s -> u.contains((String.valueOf((char) s))));
     }
 
 
@@ -72,7 +98,7 @@ public class SetWorker {
      *
      * @see RandomStringGenerator
      */
-    public static Map<Character, String> getFilledRandomStringSets(int nSets ,int strLength) {
+    public static Map<Character, String> getFilledRandomStringSets(int nSets, int strLength) {
 
         if (nSets > NAMES_OF_SETS.length) {
             throw new IllegalArgumentException("Максимальное количество множеств " + NAMES_OF_SETS.length + ", было принято : " + nSets);
