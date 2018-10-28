@@ -1,12 +1,8 @@
 package io.vasiliyplatonov.helpers;
 
-import javax.xml.stream.events.Characters;
 import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
-
 
 public class SetWorker {
     private static final char[] NAMES_OF_SETS = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
@@ -45,7 +41,6 @@ public class SetWorker {
                 System.out.println("Множество " + NAMES_OF_SETS[i] + " было нормализовано: " + set);
                 System.out.println();
             }
-
             sets.put(NAMES_OF_SETS[i], set);
         }
 
@@ -67,7 +62,6 @@ public class SetWorker {
         String u = new String(universe);
         return set.chars().allMatch(s -> u.contains((String.valueOf((char) s))));
     }
-
 
     /**
      * Метод заполнения множеств.
@@ -221,5 +215,22 @@ public class SetWorker {
         }
     }
 
+
+    /**
+     * Перевод строки в связанный список букв (char)
+     *
+     * @return связанный список (LinkedList) элементами которога являются символы, представленные типом char
+     *  пустой связанный список, если строка пустая или null
+     */
+    public static LinkedList<Character> getLetterLinkedList(String string) {
+        LinkedList<Character> letters = new LinkedList<>();
+
+        if (string == null || string.isEmpty())
+            return letters;
+        else
+            string.chars().forEach(s -> letters.add((char) s));
+
+        return letters;
+    }
 
 }

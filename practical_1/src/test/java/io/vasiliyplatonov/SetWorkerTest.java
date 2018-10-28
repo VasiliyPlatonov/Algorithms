@@ -40,4 +40,26 @@ public class SetWorkerTest {
         assertThat(SetWorker.getNormalizeSet(LOW_RUS_LETTERS, testStr)).isEqualTo(expected);
     }
 
+    @Test
+    public void getLetterLinkedList() {
+        String testStr = "флафылжж";
+
+        assertThat(SetWorker.getLetterLinkedList(testStr))
+                .isNotNull()
+                .isNotEmpty()
+                .containsExactly('ф', 'л', 'а', 'ф', 'ы', 'л', 'ж', 'ж');
+
+        assertThat(SetWorker.getLetterLinkedList("   "))
+                .isNotNull()
+                .isNotEmpty()
+                .containsExactly(' ', ' ', ' ');
+
+        assertThat(SetWorker.getLetterLinkedList(null))
+                .isNotNull()
+                .isEmpty();
+
+
+
+    }
+
 }
