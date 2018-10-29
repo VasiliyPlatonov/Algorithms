@@ -1,13 +1,11 @@
 package io.vasiliyplatonov;
 
-import io.vasiliyplatonov.helpers.SetWorker;
-import io.vasiliyplatonov.helpers.Universe;
-import org.assertj.core.api.Assert;
-import org.junit.BeforeClass;
+
+import io.vasiliyplatonov.helpers.sets.SetWorker;
 import org.junit.Test;
 
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class SetWorkerTest {
 
@@ -40,26 +38,6 @@ public class SetWorkerTest {
         assertThat(SetWorker.getNormalizeSet(LOW_RUS_LETTERS, testStr)).isEqualTo(expected);
     }
 
-    @Test
-    public void getLetterLinkedList() {
-        String testStr = "флафылжж";
 
-        assertThat(SetWorker.getLetterLinkedList(testStr))
-                .isNotNull()
-                .isNotEmpty()
-                .containsExactly('ф', 'л', 'а', 'ф', 'ы', 'л', 'ж', 'ж');
-
-        assertThat(SetWorker.getLetterLinkedList("   "))
-                .isNotNull()
-                .isNotEmpty()
-                .containsExactly(' ', ' ', ' ');
-
-        assertThat(SetWorker.getLetterLinkedList(null))
-                .isNotNull()
-                .isEmpty();
-
-
-
-    }
 
 }
