@@ -80,7 +80,7 @@ public interface SetWorker<setType> {
         Map<Character, String> sets = new HashMap<>();
         Scanner in = new Scanner(System.in);
 
-        System.out.println("Все вводимые множества должны быть включены в универсум: " + Arrays.toString(LOW_RUS_LETTERS));
+        System.out.println("Все вводимые множества должны быть включены в универсум: \n" + Arrays.toString(LOW_RUS_LETTERS) +"\n");
 
         for (int i = 0; i < nSets; i++) {
             System.out.println("Введите множество " + NAMES_OF_SETS[i] + ": ");

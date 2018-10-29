@@ -20,6 +20,12 @@ public class Main {
         LinkedList<Character> E = setWorker.difference(AB, CD);
 
         sets.put('E', E);
-        System.out.println("Набор множеств = " + sets);
+        System.out.println("Набор множеств = ");
+        for (Map.Entry<Character, LinkedList<Character>> entry : sets.entrySet()) {
+            System.out.print(entry.getKey() + ":   ");
+            System.out.println(entry.getValue());
+        }
+        System.out.print("Res: ");
+        System.out.println(E);
     }
 }
