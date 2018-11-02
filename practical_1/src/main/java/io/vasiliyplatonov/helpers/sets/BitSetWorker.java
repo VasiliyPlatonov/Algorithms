@@ -34,14 +34,18 @@ public class BitSetWorker implements SetWorker<BitSet> {
 
     @Override
     public BitSet difference(BitSet A, BitSet B) {
-        A.and(B);
-        return A;
+        BitSet result = new BitSet();
+        result.or(A);
+        result.and(B);
+        return result;
     }
 
     @Override
     public BitSet intersection(BitSet A, BitSet B) {
-        A.andNot(B);
-        return A;
+        BitSet result = new BitSet();
+        result.or(A);
+        result.andNot(B);
+        return result;
     }
 
     @Override
