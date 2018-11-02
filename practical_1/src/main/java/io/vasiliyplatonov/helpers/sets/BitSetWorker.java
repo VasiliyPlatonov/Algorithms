@@ -9,7 +9,6 @@ import java.util.Map;
 import static io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
 
 public class BitSetWorker implements SetWorker<BitSet> {
-    // RandomBitSet randomBitSet = new RandomBitSet();
 
     @Override
     public Map<Character, BitSet> getSetsFillManually(int nSets) {
@@ -35,12 +34,26 @@ public class BitSetWorker implements SetWorker<BitSet> {
 
     @Override
     public BitSet difference(BitSet A, BitSet B) {
-        return null;
+        A.and(B);
+        return A;
     }
 
     @Override
     public BitSet intersection(BitSet A, BitSet B) {
-        return null;
+        A.andNot(B);
+        return A;
+    }
+
+    @Override
+    public String setToString(BitSet s) {
+        return String.valueOf(getSetOfLowRusLatterByBitSet(s));
+    }
+
+    @Override
+    public BitSet setFromString(String s) {
+        BitSet bitSet = new BitSet();
+        fillBitSet(s, bitSet);
+        return bitSet;
     }
 
     /**

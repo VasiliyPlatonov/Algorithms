@@ -2,8 +2,17 @@ package io.vasiliyplatonov.helpers.sets;
 
 import io.vasiliyplatonov.helpers.RandomBitSet;
 import io.vasiliyplatonov.helpers.RandomStringGenerator;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 
+import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 import static io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
 
@@ -18,10 +27,10 @@ public interface SetWorker<setType> {
     /**
      * Метод для заполнения множеств рандомно
      *
-     * @param nSets     количество множеств, которые будут заполнены и возвращены
-     * @param cardinality  необходимая мощность множества
+     * @param nSets       количество множеств, которые будут заполнены и возвращены
+     * @param cardinality необходимая мощность множества
      */
-    Map<Character, setType> getSetsFillRandom(int nSets, int cardinality );
+    Map<Character, setType> getSetsFillRandom(int nSets, int cardinality);
 
     /**
      * Метод вычисляющий разность двух множеств
@@ -32,6 +41,11 @@ public interface SetWorker<setType> {
      * Метод вычисляющий пересечение двух множеств
      */
     setType intersection(setType A, setType B);
+
+
+    String setToString(setType s);
+
+    setType setFromString(String s);
 
 
     /**
@@ -135,6 +149,53 @@ public interface SetWorker<setType> {
     static boolean isSetIncludedInUniverse(char[] universe, String set) {
         String u = new String(universe);
         return set.chars().allMatch(s -> u.contains((String.valueOf((char) s))));
+    }
+
+    default List<Map<Character, setType>> readFile(String filename) throws IOException {
+        final List<Map<Character, setType>> result = new ArrayList<>();
+
+        try (Reader reader = new FileReader(filename);
+             CSVParser parse = CSVFormat.DEFAULT
+                     .withHeader()
+                     .withSkipHeaderRecord()
+                     .withQuote(null)
+                     .parse(reader)) {
+
+            StreamSupport.stream(parse.spliterator(), false)
+                    .forEach(r -> {
+                        Map<Character, setType> setList = new HashMap<>();
+                        r.toMap().forEach((key, value) -> {
+                            setList.put(key.charAt(0), setFromString(value));
+                        });
+                        result.add(setList);
+                    });
+            return result;
+        }
+    }
+
+    default void writeFile(List<Map<Character, setType>> listSet, String filename) throws IOException {
+
+        final Set<String> headers = listSet.get(0).keySet().stream().map(String::valueOf).collect(Collectors.toSet());
+
+        try (Writer writer = new FileWriter(filename);
+             CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT
+                     .withQuote(null)
+                     .withHeader(headers.toArray(new String[headers.size()])))) {
+            listSet.forEach(i -> {
+                try {
+                    final List<String> data = i.values().stream().map(this::setToString).collect(Collectors.toList());
+                    printer.printRecord(data);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+    }
+
+    default List<Map<Character, setType>> getRandomSetList(int size, int nSets, int cardinality) {
+        return IntStream.range(0, size)
+                .mapToObj(i -> this.getSetsFillRandom(nSets, cardinality))
+                .collect(Collectors.toList());
     }
 
 }
