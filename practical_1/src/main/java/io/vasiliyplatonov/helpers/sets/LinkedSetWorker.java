@@ -3,8 +3,9 @@ package io.vasiliyplatonov.helpers.sets;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public class LinkedSetWorker implements SetWorker<LinkedList<Character>> {
+public class LinkedSetWorker extends SetWorker<LinkedList<Character>> {
 
     /**
      * Перевод строки в связанный список букв (char)
@@ -12,7 +13,7 @@ public class LinkedSetWorker implements SetWorker<LinkedList<Character>> {
      * @return связанный список (LinkedList) элементами которого являются символы, представленные типом char
      * пустой связанный список, если строка пустая или null
      */
-    private LinkedList<Character> getLetterLinkedList(String string) {
+    public LinkedList<Character> setFromString(String string) {
         LinkedList<Character> letters = new LinkedList<>();
 
         if (string == null || string.isEmpty())
@@ -28,7 +29,7 @@ public class LinkedSetWorker implements SetWorker<LinkedList<Character>> {
         Map<Character, String> strings = SetWorker.getFilledStringSets(nSets);
         Map<Character, LinkedList<Character>> linkedLetters = new HashMap<>();
 
-        strings.forEach((key, value) -> linkedLetters.put(key, getLetterLinkedList(value)));
+        strings.forEach((key, value) -> linkedLetters.put(key, setFromString(value)));
 
         return linkedLetters;
     }
@@ -38,7 +39,7 @@ public class LinkedSetWorker implements SetWorker<LinkedList<Character>> {
         Map<Character, String> strings = SetWorker.getFilledRandomStringSets(nSets, cardinality);
         Map<Character, LinkedList<Character>> linkedLetters = new HashMap<>();
 
-        strings.forEach((key, value) -> linkedLetters.put(key, getLetterLinkedList(value)));
+        strings.forEach((key, value) -> linkedLetters.put(key, setFromString(value)));
 
         return linkedLetters;
     }
@@ -97,5 +98,10 @@ public class LinkedSetWorker implements SetWorker<LinkedList<Character>> {
         }
 
         return result;
+    }
+
+    @Override
+    public String setToString(LinkedList<Character> set) {
+        return set.stream().map(Object::toString).collect(Collectors.joining());
     }
 }

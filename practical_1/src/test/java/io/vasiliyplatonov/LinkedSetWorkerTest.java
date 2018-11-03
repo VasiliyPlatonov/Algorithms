@@ -14,11 +14,11 @@ public class LinkedSetWorkerTest {
 
     private final LinkedSetWorker linkedSetWorker = new LinkedSetWorker();
 
-
-    @Test
-    public void getSetsFillManually() {
-        System.out.println(linkedSetWorker.getSetsFillManually(4));
-    }
+//
+//    @Test
+//    public void getSetsFillManually() {
+//        System.out.println(linkedSetWorker.getSetsFillManually(4));
+//    }
 
     @Test
     public void difference() {
@@ -34,13 +34,13 @@ public class LinkedSetWorkerTest {
     @Test
     public void getSetsFillRandom() {
 
-
         assertThat(linkedSetWorker.getSetsFillRandom(4, 25))
                 .isNotNull()
                 .isNotEmpty()
                 .containsKeys('A', 'B', 'C', 'D');
 
         assertThat(linkedSetWorker.getSetsFillRandom(4, 25).entrySet()).hasSize(4);
+
         linkedSetWorker.getSetsFillRandom(4, 25)
                 .forEach((key, value) -> assertThat(value)
                         .hasSize(25)
@@ -48,6 +48,16 @@ public class LinkedSetWorkerTest {
 
     }
 
+    @Test
+    public void setToString() {
+        Character[] tData = {'ы', 'в', 'у', 'к', 'а', 'в', 'п', 'й'};
+        LinkedList<Character> tSet = new LinkedList<>(Arrays.asList(tData));
+        String expected = "ывукавпй";
 
+        assertThat(linkedSetWorker.setToString(tSet))
+                .isNotNull()
+                .isNotEmpty()
+                .isEqualTo(expected);
+    }
 
 }
