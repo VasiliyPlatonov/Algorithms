@@ -47,28 +47,4 @@ public class Main {
         return setWorker.difference(ab, cd);
     }
 
-
-
-
-//    private static <setType> long calcAndGetTime(SetWorker<setType> setWorker, Map<Character, setType> sets) {
-//        long before = System.nanoTime();
-//        calculate(setWorker, sets);
-//        return System.nanoTime() - before;
-//    }
-
-
-    //    private static long runBitSet(BitSetWorker setWorker, Map<Character, BitSet> set) {
-//        long before = System.nanoTime();
-//        BitSet resSet = calculate(setWorker, set);
-//        long resTime = System.nanoTime() - before;
-//
-//        set.forEach((k, v) -> {
-//            System.out.println(k + " = " + String.valueOf(setWorker.getSetOfLowRusLatterByBitSet(v)));
-//        });
-//        System.out.println("Result = " + String.valueOf(setWorker.getSetOfLowRusLatterByBitSet(resSet)));
-//        System.out.println("Time = " + resTime);
-//        System.out.println();
-//
-//        return resTime;
-//    }
 }

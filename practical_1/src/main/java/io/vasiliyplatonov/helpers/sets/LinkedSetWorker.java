@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class LinkedSetWorker implements SetWorker<LinkedList<Character>> {
+public class LinkedSetWorker extends SetWorker<LinkedList<Character>> {
 
     /**
      * Перевод строки в связанный список букв (char)

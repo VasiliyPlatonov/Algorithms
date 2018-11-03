@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
 
-public class BitSetWorker implements SetWorker<BitSet> {
+public class BitSetWorker extends SetWorker<BitSet> {
 
     @Override
     public Map<Character, BitSet> getSetsFillManually(int nSets) {
