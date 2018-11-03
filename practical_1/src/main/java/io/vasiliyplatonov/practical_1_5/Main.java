@@ -3,29 +3,34 @@ package io.vasiliyplatonov.practical_1_5;
 import io.vasiliyplatonov.helpers.sets.BitSetWorker;
 import io.vasiliyplatonov.helpers.sets.LinkedSetWorker;
 import io.vasiliyplatonov.helpers.sets.SetWorker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.annotation.processing.Processor;
 import java.io.IOException;
 import java.util.*;
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) throws IOException {
         LinkedSetWorker linkedSetWorker = new LinkedSetWorker();
         BitSetWorker bitSetWorker = new BitSetWorker();
 
-        System.out.println("LinkedList sets: ");
+        logger.debug("LinkedList sets: ");
         List<Map<Character, LinkedList<Character>>> linkedListSets = linkedSetWorker.readFile("test.csv");
         long linkedListAvTim = linkedListSets.stream()
                 .mapToLong(m -> runAndGetTime(linkedSetWorker, m))
                 .sum() / linkedListSets.size();
 
-        System.out.println("Universe mapped sets: ");
+        logger.debug("Universe mapped sets: ");
         List<Map<Character, BitSet>> bitSetsList = bitSetWorker.readFile("test.csv");
         long bitSetAvTime = bitSetsList.stream()
                 .mapToLong(m -> runAndGetTime(bitSetWorker, m))
                 .sum() / bitSetsList.size();
 
-        System.out.println("Linked list of sets average time = " + linkedListAvTim);
-        System.out.println("List of bit sets average time = " + bitSetAvTime);
+        logger.info("Linked list of sets average time = " + linkedListAvTim);
+        logger.info("List of bit sets average time = " + bitSetAvTime);
     }
 
     @SuppressWarnings("unchecked")
@@ -34,9 +39,9 @@ public class Main {
         setType resSet = calculate((SetWorker<setType>) setWorker, set);
         long resTime = System.nanoTime() - before;
 
-        set.forEach((key, value) -> System.out.println(key + " = " + setWorker.setToString(value)));
-        System.out.println("Result = " + setWorker.setToString(resSet));
-        System.out.println("Time = " + resTime + "\n");
+        set.forEach((key, value) -> logger.debug(key + " = " + setWorker.setToString(value)));
+        logger.debug("Result = " + setWorker.setToString(resSet));
+        logger.debug("Time = " + resTime + "\n");
 
         return resTime;
     }
