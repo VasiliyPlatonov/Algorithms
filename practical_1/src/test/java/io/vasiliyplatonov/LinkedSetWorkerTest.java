@@ -37,7 +37,7 @@ public class LinkedSetWorkerTest {
         assertThat(linkedSetWorker.getSetsFillRandom(4, 25))
                 .isNotNull()
                 .isNotEmpty()
-                .containsKeys('A', 'B', 'C', 'D');
+                .containsKeys('a', 'b', 'c', 'd');
 
         assertThat(linkedSetWorker.getSetsFillRandom(4, 25).entrySet()).hasSize(4);
 

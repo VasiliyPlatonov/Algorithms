@@ -15,11 +15,11 @@ public class Main {
         SetWorker<LinkedList<Character>> setWorker = new LinkedSetWorker();
         Map<Character, LinkedList<Character>> sets = setWorker.getSetsFillManually(COUNT_OF_SETS);
 
-        LinkedList<Character> AB = setWorker.intersection(sets.get('A'), sets.get('B'));
-        LinkedList<Character> CD = setWorker.intersection(sets.get('C'), sets.get('D'));
+        LinkedList<Character> AB = setWorker.intersection(sets.get('a'), sets.get('b'));
+        LinkedList<Character> CD = setWorker.intersection(sets.get('c'), sets.get('d'));
         LinkedList<Character> E = setWorker.difference(AB, CD);
 
-        sets.put('E', E);
+        sets.put('e', E);
         System.out.println("Набор множеств = ");
         for (Map.Entry<Character, LinkedList<Character>> entry : sets.entrySet()) {
             System.out.print(entry.getKey() + ":   ");
