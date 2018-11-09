@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration debug="false">
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -15,11 +15,11 @@
         </encoder>
     </appender>
 
-    <logger name="io.vasiliyplatonov" level="debug">
+    <logger name="io.vasiliyplatonov" level="debug" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <root level="error">
+    <root level="error" debug="false">
         <appender-ref ref="FILE"/>
     </root>
 

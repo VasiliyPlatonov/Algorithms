@@ -2,7 +2,7 @@
 out/
 target/
 *.docx
-.log
+*.log
 
 !.mvn/wrapper/maven-wrapper.jar
 
