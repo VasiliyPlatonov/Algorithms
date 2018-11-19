@@ -10,6 +10,7 @@
         <module>practical_1</module>
         <module>practical_2</module>
         <module>practical_3</module>
+        <module>practical_4</module>
     </modules>
     <!-- packaging>jar</packaging -->
 

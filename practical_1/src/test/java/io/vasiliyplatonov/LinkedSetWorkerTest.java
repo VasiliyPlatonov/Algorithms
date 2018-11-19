@@ -1,12 +1,10 @@
 package io.vasiliyplatonov;
 
-import io.vasiliyplatonov.helpers.Universe;
 import io.vasiliyplatonov.helpers.sets.LinkedSetWorker;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
