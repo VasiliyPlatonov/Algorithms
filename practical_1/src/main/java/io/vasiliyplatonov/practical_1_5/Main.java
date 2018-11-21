@@ -6,25 +6,50 @@ import io.vasiliyplatonov.helpers.sets.SetWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.processing.Processor;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
+import static java.util.Objects.isNull;
+
 public class Main {
+    private static final int SIZE_SET_LIST = 100;
+    private static final int COUNT_SETS = 4;
+    private static final int CARDINALITY_SETS = 4;
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws FileNotFoundException {
+
         LinkedSetWorker linkedSetWorker = new LinkedSetWorker();
         BitSetWorker bitSetWorker = new BitSetWorker();
+        List<Map<Character, LinkedList<Character>>> linkedListSets = null;
+        List<Map<Character, BitSet>> bitSetsList = null;
+
+        if (isNull(args[0])) {
+            throw new IllegalArgumentException("входящие аргументы не могут быть null");
+        } else if (args[0].equals("rand")) {
+            linkedListSets = linkedSetWorker.getRandomSetList(SIZE_SET_LIST, COUNT_SETS, CARDINALITY_SETS);
+            bitSetsList = bitSetWorker.getRandomSetList(SIZE_SET_LIST, COUNT_SETS, CARDINALITY_SETS);
+        } else {
+            String filename = args[0];
+
+            try {
+                linkedListSets = linkedSetWorker.readFile(filename);
+                bitSetsList = bitSetWorker.readFile(filename);
+            } catch (FileNotFoundException e) {
+               throw e;
+            } catch (IOException e) {
+                logger.error("Ошибка при чтении файла [ " + filename + " ]", e);
+            }
+        }
+
 
         logger.debug("LinkedList sets: ");
-        List<Map<Character, LinkedList<Character>>> linkedListSets = linkedSetWorker.readFile("test.csv");
         long linkedListAvTim = linkedListSets.stream()
                 .mapToLong(m -> runAndGetTime(linkedSetWorker, m))
                 .sum() / linkedListSets.size();
 
         logger.debug("Universe mapped sets: ");
-        List<Map<Character, BitSet>> bitSetsList = bitSetWorker.readFile("test.csv");
         long bitSetAvTime = bitSetsList.stream()
                 .mapToLong(m -> runAndGetTime(bitSetWorker, m))
                 .sum() / bitSetsList.size();
@@ -32,6 +57,7 @@ public class Main {
         logger.info("Linked list of sets average time = " + linkedListAvTim);
         logger.info("List of bit sets average time = " + bitSetAvTime);
     }
+
 
     @SuppressWarnings("unchecked")
     private static <setType> long runAndGetTime(SetWorker setWorker, Map<Character, setType> set) {

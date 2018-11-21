@@ -18,9 +18,10 @@ public class Main {
         }
 
         //  Вычислить (A & B) / (C & D)
-        BitSet resultSet = sets.get('A');
-        resultSet.and(sets.get('B'));
-        BitSet CD = sets.get('C');
+        BitSet resultSet = sets.get('a');
+        resultSet.and(sets.get('b'));
+        BitSet CD = sets.get('c');
+        CD.and(sets.get('d'));
         resultSet.andNot(CD);
 
         System.out.println("Резулитирующее множество: " + String.valueOf(setWorker.getSetOfLowRusLatterByBitSet(resultSet)));

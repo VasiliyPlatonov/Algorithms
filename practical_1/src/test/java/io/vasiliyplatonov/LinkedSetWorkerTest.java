@@ -1,12 +1,10 @@
 package io.vasiliyplatonov;
 
-import io.vasiliyplatonov.helpers.Universe;
 import io.vasiliyplatonov.helpers.sets.LinkedSetWorker;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -37,7 +35,7 @@ public class LinkedSetWorkerTest {
         assertThat(linkedSetWorker.getSetsFillRandom(4, 25))
                 .isNotNull()
                 .isNotEmpty()
-                .containsKeys('A', 'B', 'C', 'D');
+                .containsKeys('a', 'b', 'c', 'd');
 
         assertThat(linkedSetWorker.getSetsFillRandom(4, 25).entrySet()).hasSize(4);
 

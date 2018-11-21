@@ -2,24 +2,16 @@ package io.vasiliyplatonov.helpers.sets;
 
 import io.vasiliyplatonov.helpers.CsvReadable;
 import io.vasiliyplatonov.helpers.CsvWritable;
-import io.vasiliyplatonov.helpers.RandomBitSet;
 import io.vasiliyplatonov.helpers.RandomStringGenerator;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
 
-import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 import static io.vasiliyplatonov.helpers.Universe.LOW_RUS_LETTERS;
 
 public abstract class SetWorker<setType> implements CsvReadable<setType>, CsvWritable<setType> {
-    final static char[] NAMES_OF_SETS = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+    final static char[] NAMES_OF_SETS = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
 
 
     abstract public Map<Character, setType> getSetsFillManually(int nSets);
@@ -53,7 +45,7 @@ public abstract class SetWorker<setType> implements CsvReadable<setType>, CsvWri
         Map<Character, String> sets = new HashMap<>();
         Scanner in = new Scanner(System.in);
 
-        System.out.println("Все вводимые множества должны быть включены в универсум: \n" + Arrays.toString(LOW_RUS_LETTERS) +"\n");
+        System.out.println("Все вводимые множества должны быть включены в универсум: \n" + Arrays.toString(LOW_RUS_LETTERS) + "\n");
 
         for (int i = 0; i < nSets; i++) {
             System.out.println("Введите множество " + NAMES_OF_SETS[i] + ": ");
@@ -110,6 +102,14 @@ public abstract class SetWorker<setType> implements CsvReadable<setType>, CsvWri
         return set.chars().allMatch(s -> u.contains((String.valueOf((char) s))));
     }
 
+    /**
+     * Создание списка множеств
+     *
+     * @param size        длина списка
+     * @param nSets       количество множеств в элементе списка
+     * @param cardinality мощность сножеств
+     * @return список отображений где ключ - имя множества, значение - множество
+     */
     public List<Map<Character, setType>> getRandomSetList(int size, int nSets, int cardinality) {
         return IntStream.range(0, size)
                 .mapToObj(i -> this.getSetsFillRandom(nSets, cardinality))

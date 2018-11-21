@@ -32,8 +32,8 @@ public class Main {
 
 
         //(A & B) / (C & D)
-        LinkedList<Character> AB = setWorker.intersection(sets.get('A'), sets.get('B'));
-        LinkedList<Character> CD = setWorker.intersection(sets.get('C'), sets.get('D'));
+        LinkedList<Character> AB = setWorker.intersection(sets.get('a'), sets.get('b'));
+        LinkedList<Character> CD = setWorker.intersection(sets.get('c'), sets.get('d'));
         LinkedList<Character> E = setWorker.difference(AB, CD);
 
         for (Map.Entry<Character, LinkedList<Character>> entry : sets.entrySet()) {
@@ -49,9 +49,10 @@ public class Main {
         Map<Character, BitSet> bitSets = setWorker.getSetsFillRandom(COUNT_OF_SETS, Universe.LOW_RUS_LETTERS.length);
 
 //      Вычислить (A & B) / (C & D)
-        BitSet resultSet = bitSets.get('A');
-        resultSet.and(bitSets.get('B'));
-        BitSet CD = bitSets.get('C');
+        BitSet resultSet = bitSets.get('a');
+        resultSet.and(bitSets.get('b'));
+        BitSet CD = bitSets.get('c');
+        CD.and(bitSets.get('d'));
         resultSet.andNot(CD);
 
         System.out.println("Вывод как бинарный массив: ");
