@@ -11,5 +11,11 @@
 
     <artifactId>practical_3</artifactId>
 
-
+<dependencies>
+    <dependency>
+        <groupId>io.vasiliyplatonov</groupId>
+        <artifactId>practical_4</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </dependency>
+</dependencies>
 </project>

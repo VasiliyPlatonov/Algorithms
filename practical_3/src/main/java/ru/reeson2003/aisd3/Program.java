@@ -1,22 +1,44 @@
 package ru.reeson2003.aisd3;
 
+import java.io.IOException;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class Program {
-
     public static final int MAX_WIDTH = 80;
 
     public static void main(String[] args) {
         StringCharacterIterator chars = new StringCharacterIterator("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         int maxRow = 4;
-        Tree<Character> tree = Tree.directTree((row, pos) -> row < maxRow && chars.current() != CharacterIterator.DONE, () -> {
-            char result = chars.current();
-            chars.next();
-            return result;
-        });
-        printTree(tree, MAX_WIDTH / 2, 4, MAX_WIDTH);
+        Tree<Character> tree = measure(() -> createTree(chars, maxRow),
+                time -> System.out.println("Tree created in [" + time + "] nanoseconds"));
+        measure(() -> printTree(tree, MAX_WIDTH / 2, 4, MAX_WIDTH),
+                time -> System.out.println("Tree printed in [" + time + "] nanoseconds"));
+        writeTreeImage(tree);
+        Integer counter = measure(() -> processTree(tree),
+                time -> System.out.println("Tree processed in [" + time + "] nanoseconds"));
+        System.out.println(counter + " nodes has parent");
+    }
+
+    private static <T> T measure(Supplier<T> command, Consumer<Long> timeConsumer) {
+        long start = System.nanoTime();
+        T t = command.get();
+        long duration = System.nanoTime() - start;
+        timeConsumer.accept(duration);
+        return t;
+    }
+
+    private static <T> void measure(Runnable command, Consumer<Long> timeConsumer) {
+        measure(() -> {
+            command.run();
+            return null;
+        }, timeConsumer);
+    }
+
+    private static Integer processTree(Tree<Character> tree) {
         AtomicInteger counter = new AtomicInteger(0);
         TreeProcessor.breadthFirstSearch(tree, (row, pos) -> {
             System.out.print("Row: " + row + ", ");
@@ -30,7 +52,23 @@ public class Program {
                 System.out.println();
             };
         });
-        System.out.println(counter.get() + " nodes has parent");
+        return counter.get();
+    }
+
+    private static Tree<Character> createTree(StringCharacterIterator chars, int maxRow) {
+        return Tree.directTree((row, pos) -> row < maxRow && chars.current() != CharacterIterator.DONE, () -> {
+            char result = chars.current();
+            chars.next();
+            return result;
+        });
+    }
+
+    private static void writeTreeImage(Tree<Character> tree) {
+        try {
+            TreeGraphAdapter.writeTree(tree, "tree");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")
